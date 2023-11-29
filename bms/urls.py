@@ -1,5 +1,5 @@
 """
-URL configuration for Bank_Management_System project.
+URL configuration for bms project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
