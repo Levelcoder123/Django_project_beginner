@@ -1,8 +1,9 @@
 from django.db import models
+from users.models import User
 
 
 # Create your models here.
 class Account(models.Model):
-    account_number = models.IntegerField()
-    account_type = models.CharField(max_length=15)
-    account_amount = models.IntegerField()
+    number = models.IntegerField()
+    type = models.CharField(max_length=15)
+    amount = models.IntegerField()
