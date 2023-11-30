@@ -7,3 +7,6 @@ class Bank(models.Model):
     branch = models.CharField(max_length=100)
     services = models.TextField()
     is_islamic = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.name}, {self.branch}"
