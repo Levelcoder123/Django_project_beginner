@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Banks of users</title>
+</head>
+<body>
+<ul>
+    {% for bank in banks %}
+    <li> Name: {{ bank.name }}, Branch: {{ bank.branch}}, Is_islamic: {{ bank.is_islamic}}</li>
+    {% endfor %}
+
+</ul>
+</body>
+</html>
