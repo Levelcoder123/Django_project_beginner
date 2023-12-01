@@ -5,7 +5,7 @@ from .models import Account
 
 
 # Create your views here.
-def get_accounts(request):
+def get_accounts_data(request):
 
     accounts_data = Account.objects.all()
 
