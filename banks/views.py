@@ -1,14 +1,16 @@
 from django.shortcuts import render
+from django.views import View
 
 from .models import Bank
 
 
 # Create your views here.
-def get_banks_data(request):
-    context = {
-        'banks_data': Bank.objects.all()
-    }
+class BankView(View):
+    def get(self, request):
+        context = {
+            'banks_data': Bank.objects.all()
+        }
 
-    return render(
-        request, 'banks.html', context
-    )
+        return render(
+            request, 'banks.html', context
+        )
