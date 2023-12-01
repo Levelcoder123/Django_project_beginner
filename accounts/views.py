@@ -6,11 +6,8 @@ from .models import Account
 
 # Create your views here.
 def get_accounts_data(request):
-
-    accounts_data = Account.objects.all()
+    context = {'accounts_data': Account.objects.all()}
 
     return render(
-        request, 'accounts.html', {
-            'accounts': accounts_data
-        }
+        request, 'accounts.html', context
     )
