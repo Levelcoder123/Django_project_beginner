@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up Page</title>
+</head>
+<body>
+<h1> Signup Page</h1>
+<form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+
+    <label for="name">username</label>
+    <input type="text" id="name" name="name">
+
+    <label for="user_email">email</label>
+    <input type="email" id="user_email" name="email">
+
+    <label for="user_password">password</label>
+    <input type="password" id="user_password" name="password">
+
+    <label for="user_number">phone number</label>
+    <input type="number" id="user_number" name="number">
+
+    <label for="user_address">address</label>
+    <input type="text" id="user_address" name="address">
+
+    <button type="submit">Sign Up</button>
+
+</form>
+
+</body>
+</html>

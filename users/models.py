@@ -1,13 +1,15 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .user_manager import CustomUserManager
 
-# Create your models here.
-class User(models.Model):
-    name = models.CharField(max_length=20)
-    id = models.IntegerField(primary_key=True)
-    email = models.EmailField()
-    phone_number = models.IntegerField()
+
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    date_of_birth = models.DateField(null=True, blank=True)
+    phone_number = models.IntegerField(null=True)
     address = models.CharField(max_length=100)
 
-    def __str__(self):
-        return f"{self.name}"
+    object = CustomUserManager()
