@@ -1,27 +1,22 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView
 from django.views import View
 
 from users.models import User
 
 
 # login view
-class LoginView(View):
-    def post(self, request):
-        user_name = request.POST.get('username')
-        user_password = request.POST.get('password')
+class LoginPageView(LoginView):
+    template_name = 'login.html'
+    success_url = 'accounts/'
 
-        user = authenticate(request, username=user_name, password=user_password)
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'error': 'Invalid login'})
 
-        if user is not None:
-            login(request, user)
+    def form_valid(self, form):
+        response = super().form_valid(form)
 
-            return redirect('/accounts')
-        else:
-            return render(request, 'login.html', {'error': 'invalid login'})
-
-    def get(self, request):
-        return render(request, 'login.html')
+        return response
 
 
 # sign up view
