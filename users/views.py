@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 from django.views import View
 
 from users.models import User
@@ -8,10 +9,12 @@ from users.models import User
 # login view
 class LoginPageView(LoginView):
     template_name = 'login.html'
-    success_url = 'accounts/'
 
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'error': 'Invalid login'})
+
+    def get_success_url(self):
+        return reverse_lazy('accounts')
 
     def form_valid(self, form):
         response = super().form_valid(form)

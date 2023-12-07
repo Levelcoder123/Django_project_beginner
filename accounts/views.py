@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.views import View
 
 from .models import Account
 
 
-def get_accounts_data(request):
-    context = {'user_accounts': Account.objects.filter(user=request.user)}
+class AccountView(View):
+    def get(self, request):
+        context = {'user_accounts': Account.objects.filter(user=request.user)}
 
-    return render(request, 'accounts.html', context)
+        return render(request, 'accounts.html', context)
