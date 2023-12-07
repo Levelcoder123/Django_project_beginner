@@ -2,11 +2,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from banks.models import Bank
-from .serializers import BankSerializer
+from .serializers import BanksSerializer
 
 
 @api_view(['GET'])
-def bank_api_view(request):
+def banks_api_view(request):
     bank_data = Bank.objects.all()
-    serializer = BankSerializer(bank_data, many=True)
+    serializer = BanksSerializer(bank_data, many=True)
     return Response(serializer.data)
