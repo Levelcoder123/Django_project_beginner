@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'accounts',
     'banks',
     'users',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
