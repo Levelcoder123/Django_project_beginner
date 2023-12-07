@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from django.views import View
+from django.views.generic import ListView
 
 from .models import Account
 
 
-class AccountView(View):
-    def get(self, request):
-        context = {'user_accounts': Account.objects.filter(user=request.user)}
+class AccountView(ListView):
+    model = Account
+    template_name = 'accounts.html'
 
-        return render(request, 'accounts.html', context)
+    def get_queryset(self):
+        return Account.objects.filter(user=self.request.user)

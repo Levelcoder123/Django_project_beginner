@@ -6,7 +6,7 @@
 </head>
 <body>
 <ul>
-    {% for account in user_accounts %}
+    {% for account in object_list %}
     <li>Bank: {{ account.bank.name }}, User: {{ account.user.username }}, Amount: {{ account.amount }}</li>
     {% endfor %}
 
