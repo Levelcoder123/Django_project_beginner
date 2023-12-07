@@ -13,13 +13,13 @@ class LoginPageView(LoginView):
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'error': 'Invalid login'})
 
-    def get_success_url(self):
-        return reverse_lazy('accounts')
-
     def form_valid(self, form):
         response = super().form_valid(form)
 
         return response
+
+    def get_success_url(self):
+        return reverse_lazy('accounts')
 
 
 # sign up view
