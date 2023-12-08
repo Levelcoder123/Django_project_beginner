@@ -5,5 +5,5 @@ from .serializers import BanksSerializer
 
 
 class BanksApiView(ListAPIView):
-    queryset = Bank
+    queryset = Bank.objects.all()
     serializer_class = BanksSerializer

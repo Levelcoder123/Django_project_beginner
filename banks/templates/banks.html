@@ -6,7 +6,7 @@
 </head>
 <body>
 <ul>
-    {% for bank in object_list %}
+    {% for bank in banks %}
     <li> Name: {{ bank.name }}, Branch: {{ bank.branch}}, Is_islamic: {{ bank.is_islamic}}</li>
     {% endfor %}
 
