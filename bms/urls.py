@@ -23,7 +23,7 @@ urlpatterns = [
     path('banks/', include('banks.urls')),
     path('accounts/', include('accounts.urls')),
     path('users/', include('users.urls')),
-    path('api/', include('api.banks.urls')),
+    path('api/', include('api.urls')),
     path('api-token-auth/', views.obtain_auth_token)
 
 ]
