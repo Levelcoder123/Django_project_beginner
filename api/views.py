@@ -20,15 +20,11 @@ class CreateUserTokenAPIView(APIView):
         serializer = UsersSerializer(data=request.data)
 
         if not serializer.is_valid():
-            return Response({'error': 'something wrong'}, status=status.HTTP_403_FORBIDDEN)
-
+            return Response({'error': 'something wrong'},
+                            status=status.HTTP_403_FORBIDDEN)
         serializer.save()
 
         user = User.objects.get(username=serializer.data['username'])
+        token, _ = Token.objects.get_or_create(user=user)
 
-        if user:
-            token, _ = Token.objects.get_or_create(user=user)
-
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
-
-        return Response({'error': 'Invalid user name or password'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
