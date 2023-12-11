@@ -8,7 +8,7 @@ from accounts.models import Account
 class BanksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bank
-        fields = '_all_'
+        fields = '__all__'
 
 
 class UsersSerializer(serializers.ModelSerializer):
