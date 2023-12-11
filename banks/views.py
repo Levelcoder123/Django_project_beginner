@@ -1,11 +1,9 @@
-from django.shortcuts import render
-from django.views import View
+from django.views.generic import ListView
 
 from .models import Bank
 
 
-class BankView(View):
-    def get(self, request):
-        context = {'banks_data': Bank.objects.all()}
-
-        return render(request, 'banks.html', context)
+class BankListView(ListView):
+    model = Bank
+    template_name = 'banks.html'
+    context_object_name = 'banks_data'
