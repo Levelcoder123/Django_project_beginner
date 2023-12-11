@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from api.serializers import AccountSerializer, BanksSerializer
+from api.serializers import AccountSerializer, BankSerializer
 from banks.models import Bank
 from users.models import User
 from accounts.models import Account
@@ -15,10 +15,10 @@ from accounts.models import Account
 
 class BankListAPIView(ListAPIView):
     queryset = Bank.objects.all()
-    serializer_class = BanksSerializer
+    serializer_class = BankSerializer
 
 
-class CreateUserTokenAPIView(APIView):
+class TokenObtainAPIView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -45,7 +45,7 @@ class CreateUserTokenAPIView(APIView):
                             status=status.HTTP_200_OK)
 
 
-class AuthorizedUserAccountsAPIView(ListAPIView):
+class AccountListAPIView(ListAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
