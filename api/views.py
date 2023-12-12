@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
@@ -46,7 +46,7 @@ class TokenObtainAPIView(APIView):
                             status=status.HTTP_200_OK)
 
 
-class AccountListAPIView(ListAPIView):
+class AccountListCreateAPIView(ListCreateAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
@@ -56,40 +56,20 @@ class AccountListAPIView(ListAPIView):
     def get_queryset(self):
         return Account.objects.filter(user=self.request.user)
 
-
-class CreateAccountAPIView(CreateAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
-class UpdateAccountAPIView(UpdateAPIView):
+class AccountRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    lookup_field = 'number'
+    lookup_field = 'pk'
 
-
-class DeleteAccountAPIView(DestroyAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-    lookup_field = 'number'
-
-
-class AccountDetailAPIView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        bank_accounts = Account.objects.filter(user=request.user)
-
-        serializer = AccountSerializer(bank_accounts, many=True)
-
-        return Response(serializer.data)
+    def get_queryset(self):
+        return Account.objects.filter(user=self.request.user)
 
 
 class CreateBankAPIView(CreateAPIView):
