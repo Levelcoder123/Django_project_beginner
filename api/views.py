@@ -47,7 +47,6 @@ class TokenObtainAPIView(APIView):
 
 
 class AccountListCreateAPIView(ListCreateAPIView):
-    queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
     authentication_classes = [TokenAuthentication]
@@ -61,9 +60,7 @@ class AccountListCreateAPIView(ListCreateAPIView):
 
 
 class AccountRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
-    queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    lookup_field = 'pk'
 
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
