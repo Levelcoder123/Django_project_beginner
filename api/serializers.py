@@ -20,4 +20,4 @@ class UserSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['number', 'type', 'amount']
+        fields = ['bank', 'number', 'type', 'amount']

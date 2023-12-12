@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
@@ -39,6 +39,7 @@ class TokenObtainAPIView(APIView):
         else:
             user.set_password(password)
             user.save()
+
             token = Token.objects.create(user=user)
 
             return Response({'token': token.key},
@@ -54,3 +55,43 @@ class AccountListAPIView(ListAPIView):
 
     def get_queryset(self):
         return Account.objects.filter(user=self.request.user)
+
+
+class CreateAccountAPIView(CreateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class UpdateAccountAPIView(UpdateAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    lookup_field = 'number'
+
+
+class DeleteAccountAPIView(DestroyAPIView):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    lookup_field = 'number'
+
+
+class AccountDetailAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        bank_accounts = Account.objects.filter(user=request.user)
+
+        serializer = AccountSerializer(bank_accounts, many=True)
+
+        return Response(serializer.data)
+
+
+class CreateBankAPIView(CreateAPIView):
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializer
