@@ -5,13 +5,13 @@ from users.models import User
 from accounts.models import Account
 
 
-class BanksSerializer(serializers.ModelSerializer):
+class BankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bank
         fields = '__all__'
 
 
-class UsersSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'password']
@@ -20,4 +20,4 @@ class UsersSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['number', 'type', 'amount']
+        fields = ['bank', 'number', 'type', 'amount']

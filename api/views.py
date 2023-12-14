@@ -1,13 +1,13 @@
 from django.contrib.auth import authenticate
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from api.serializers import AccountSerializer, BanksSerializer
+from api.serializers import AccountSerializer, BankSerializer
 from banks.models import Bank
 from users.models import User
 from accounts.models import Account
@@ -15,10 +15,10 @@ from accounts.models import Account
 
 class BankListAPIView(ListAPIView):
     queryset = Bank.objects.all()
-    serializer_class = BanksSerializer
+    serializer_class = BankSerializer
 
 
-class CreateUserTokenAPIView(APIView):
+class TokenObtainAPIView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -39,14 +39,14 @@ class CreateUserTokenAPIView(APIView):
         else:
             user.set_password(password)
             user.save()
+
             token = Token.objects.create(user=user)
 
             return Response({'token': token.key},
                             status=status.HTTP_200_OK)
 
 
-class AuthorizedUserAccountsAPIView(ListAPIView):
-    queryset = Account.objects.all()
+class AccountListCreateAPIView(ListCreateAPIView):
     serializer_class = AccountSerializer
 
     authentication_classes = [TokenAuthentication]
@@ -54,3 +54,21 @@ class AuthorizedUserAccountsAPIView(ListAPIView):
 
     def get_queryset(self):
         return Account.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class AccountRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = AccountSerializer
+
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Account.objects.filter(user=self.request.user)
+
+
+class CreateBankAPIView(CreateAPIView):
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializer
